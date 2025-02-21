@@ -1,0 +1,101 @@
+{
+  "project_info": {
+    "project_number": "98947686492",
+    "firebase_url": "https://blockr-app.firebaseio.com",
+    "project_id": "blockr-app",
+    "storage_bucket": "blockr-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98947686492:android:ee474aae65edd001960699",
+        "android_client_info": {
+          "package_name": "com.example.box_cricket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98947686492-mb3ap0gmqghjo5ujk6gevdaov5ch3ar4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.box_cricket",
+            "certificate_hash": "44cc569d6051515735822438e81425b6e2111b2a"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ7P51nc-tA1Tpk_ls4O0Sok3LRVZcW88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98947686492-6s07ff6npnf9seqs4nqop2cuasbqi8mb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.prymecomm"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98947686492:android:635da68cdb47aa11960699",
+        "android_client_info": {
+          "package_name": "com.example.new_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ7P51nc-tA1Tpk_ls4O0Sok3LRVZcW88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98947686492-6s07ff6npnf9seqs4nqop2cuasbqi8mb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.prymecomm"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98947686492:android:a4c5919a21c26719960699",
+        "android_client_info": {
+          "package_name": "com.prymecomm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ7P51nc-tA1Tpk_ls4O0Sok3LRVZcW88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98947686492-6s07ff6npnf9seqs4nqop2cuasbqi8mb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.prymecomm"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
