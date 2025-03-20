@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../Controllers/Product_Controller.dart';
-import '../Theme/preBuild_widget.dart';
-import '../theme/theme.dart';
+import 'package:new_app/Controllers/Product_Controller.dart';
+import 'package:new_app/Theme/preBuild_widget.dart';
+import 'package:new_app/Theme/theme.dart';
 
 
 
@@ -150,32 +149,41 @@ class _AddProductPageState extends State<AddProductPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 if (currentStep.value > 0)
-                  TextButton(
-                    onPressed: () => currentStep.value--,
-                    child: Text("Back", style: GoogleFonts.poppins(fontSize: 16, color: Colors.grey)),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 80),
+                    child: TextButton(
+                      onPressed: () => currentStep.value--,
+                      child: Text("Back", style: GoogleFonts.poppins(fontSize: 16, color: Colors.grey)),
+                    ),
                   ),
                 if (currentStep.value < 2)
-                  ElevatedButton(
-                    onPressed: () => currentStep.value++,
-                    child: Text("Next", style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold)),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.yellow,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 80),
+                    child: ElevatedButton(
+                      onPressed: () => currentStep.value++,
+                      child: Text("Next", style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.yellow,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      ),
                     ),
                   )
                 else
-                  ElevatedButton(
-                    onPressed: () async {
-                      await controller.uploadProduct();
-                    },
-                    child: Obx(() => controller.isUploading.value
-                        ? CircularProgressIndicator(color: Colors.white) // Show loading indicator
-                        : Text("Submit", style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold))),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.yellow,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 80),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await controller.uploadProduct();
+                      },
+                      child: Obx(() => controller.isUploading.value
+                          ? CircularProgressIndicator(color: Colors.white) // Show loading indicator
+                          : Text("Submit", style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold))),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.yellow,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      ),
                     ),
                   ),
               ],

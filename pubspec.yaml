@@ -43,13 +43,48 @@ dependencies:
   carousel_slider: ^4.0.0
   image_picker:
   intl:
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons:
+  flutter_localizations:
+    sdk: flutter
+  pinput:
+  animate_do:
+  font_awesome_flutter:
+  lucide_icons_flutter:
+  video_player:
+  dot_navigation_bar:
+  firebase_core:
+  google_mlkit_translation:
+  dio:
+  geolocator:
+  flutter_glow:
+  flutter_spinkit:
+  http:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  generate: true
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/agro1.jpg
+    - assets/agro2.jpg
+    - assets/agro3.jpg
+    - assets/agro4.jpg
+
+
+flutter_intl:
+  enabled: true
+  arb-dir: lib/l10n
+  template-arb-file: app_en.arb
+  output-localization-file: app_localizations.dart
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -62,16 +97,24 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-flutter:
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
-  uses-material-design: true
+
+
+
+
+
+
+
+
 
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - lib/l10n/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

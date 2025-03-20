@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
-import '../theme/theme.dart';  // Import AppColors if defined in a separate file
+import 'package:new_app/theme/theme.dart';
 
 class ReportPage extends StatefulWidget {
   @override

@@ -1,94 +1,104 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:new_app/Controllers/Product_Controller.dart';
 import 'package:new_app/Theme/theme.dart';
 import 'package:get/get.dart';
 
 class DrinkCardPageGrid extends StatelessWidget {
-  final ProductController productController = Get.put(ProductController());
-
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 30,
-          childAspectRatio: 0.8,
-        ),
-        itemCount: 6,
-        itemBuilder: (context, index) {
-          return Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: GestureDetector(
-                  onTap: () {
-                    Get.toNamed("product");
-                  },
-                  child: Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.green.shade50,
-                      borderRadius: BorderRadius.circular(25),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.4),
-                          blurRadius: 10,
-                          offset: Offset(4, 4),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03, vertical: 10),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: screenWidth > 600 ? 3 : 2,
+              crossAxisSpacing: screenWidth * 0.04,
+              mainAxisSpacing: screenHeight * 0.03,
+              childAspectRatio: 0.7,
+            ),
+            itemCount: 6,
+            itemBuilder: (context, index) {
+              return Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned(
+                    bottom: screenHeight * 0.02,
+                    left: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.toNamed("product");
+                      },
+                      child: Container(
+                        height: screenHeight * 0.22,
+                        decoration: BoxDecoration(
+                          color: Colors.green.shade50,
+                          borderRadius: BorderRadius.circular(25),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.4),
+                              blurRadius: 10,
+                              offset: Offset(4, 4),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text('White Chocolate Cappuccino', style: TextStyle(color: Colors.black87, fontSize: 18, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 10),
-                        Text('', style: TextStyle(color: Colors.black54, fontSize: 14)),
-                      ],
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.04, vertical: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              'White Chocolate Cappuccino',
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: screenWidth * 0.04, // Responsive text
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: screenHeight * 0.008),
+                            Text(
+                              'Delicious & creamy',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: screenWidth * 0.035, // Responsive text
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              Positioned(
-                top: -35,
-                left: 40,
-                child: Image.asset(
-                  'assets/fertilizer.png',
-                  height: 170,
-                  fit: BoxFit.contain,
-                ),
-              ),
-              // Positioned(
-              //   top: 40,
-              //   left: 15,
-              //   child: Row(
-              //     children: [
-              //       Icon(Icons.star, color: Colors.yellow, size: 18),
-              //       SizedBox(width: 4),
-              //       Text('7.8', style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold)),
-              //     ],
-              //   ),
-              // ),
-              Positioned(
-                bottom: 20,
-                right: 7,
-                child: Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                  child: Icon(Icons.favorite_border, color: Colors.red),
-                ),
-              ),
-            ],
+                  Positioned(
+                    top: -screenHeight * 0.01,
+                    left: screenWidth * 0.08,
+                    child: Image.asset(
+                      'assets/fertilizer.png',
+                      height: screenHeight * 0.18,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: screenHeight * 0.02,
+                    right: screenWidth * 0.02,
+                    child: Container(
+                      padding: EdgeInsets.all(screenWidth * 0.02),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      child: Icon(Icons.favorite_border, color: Colors.red),
+                    ),
+                  ),
+                ],
+              );
+            },
           );
         },
       ),
@@ -170,6 +180,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   //location
                   Container(
+                    height: MediaQuery.of(context).size.height*0.07,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
@@ -195,6 +206,7 @@ class _HomePageState extends State<HomePage> {
                   // Search Bar Container
                   Expanded(
                     child: Container(
+                      height: MediaQuery.of(context).size.height*0.07,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
@@ -207,15 +219,17 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: "Search",
-                          labelStyle: TextStyle(color: Colors.grey),
-                          hintStyle: TextStyle(color: Colors.grey),
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Icons.search, color: AppColors.lightgreen),
+                      child: Center(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "Search",
+                            labelStyle: TextStyle(color: Colors.grey),
+                            hintStyle: TextStyle(color: Colors.grey),
+                            border: InputBorder.none,
+                            prefixIcon: Icon(Icons.search, color: AppColors.lightgreen),
+                          ),
+                          style: TextStyle(color: Colors.black),
                         ),
-                        style: TextStyle(color: Colors.black),
                       ),
                     ),
                   ),
@@ -272,7 +286,7 @@ class _HomePageState extends State<HomePage> {
               }).toList(),
               options: CarouselOptions(
                 height: 180,
-                viewportFraction: 0.9,
+                viewportFraction: 0.8,
                 autoPlay: true,
                 autoPlayInterval: Duration(seconds: 3),
                 autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -313,7 +327,7 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 color: Colors.white,
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.15,
+                height: MediaQuery.of(context).size.height * 0.17,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: cata_icon.length, // Use the length of cata_icon list
@@ -363,6 +377,18 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text("Recommended for you",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                  Spacer(),
+                  Text("See All",style: TextStyle(color: AppColors.yellow,fontSize: 20),)
+                ],
+              ),
+            ),
+            DrinkCardPageGrid(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("Farmer products",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                   Spacer(),
                   Text("See All",style: TextStyle(color: AppColors.yellow,fontSize: 20),)
                 ],

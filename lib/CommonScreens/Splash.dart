@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:new_app/Screens/DashBoard.dart';
-import 'package:new_app/Screens/Register.dart';
-import 'package:new_app/Screens/intro.dart';
+import 'package:new_app/Agro/Screens/signIn.dart';
+import 'package:new_app/CommonScreens/Intro.dart';
 import 'package:new_app/Theme/theme.dart';
 
 
@@ -18,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SignUpScreen()),
+        MaterialPageRoute(builder: (context) => Intro()),
       );
     });
   }
