@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:new_app/Agro/Screens/verifyOtp.dart';
+import 'package:new_app/Controllers/otp_controller.dart';
 import 'package:new_app/Theme/theme.dart';
 
 class MyPhone extends StatefulWidget {
@@ -13,6 +13,7 @@ class MyPhone extends StatefulWidget {
 class _MyPhoneState extends State<MyPhone> {
   TextEditingController countryController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  final GenerateOtpController _controller = Get.put(GenerateOtpController());
 
   @override
   void initState() {
@@ -63,6 +64,7 @@ class _MyPhoneState extends State<MyPhone> {
                         controller: countryController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(border: InputBorder.none),
+                        enabled: false, // Prevents editing of country code
                       ),
                     ),
                     const Text("|", style: TextStyle(fontSize: 33, color: Colors.grey)),
@@ -86,20 +88,32 @@ class _MyPhoneState extends State<MyPhone> {
               SizedBox(
                 width: double.infinity,
                 height: 45,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: AppColors.lightgreen,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                child:ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.lightgreen,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                    onPressed: _controller.isLoading.value
+                        ? null
+                        : () {
+                      String phoneNumber = phoneController.text.trim();
+                      if (phoneNumber.length == 10 && RegExp(r'^[0-9]+$').hasMatch(phoneNumber)) {
+                        _controller.mobileNumber.value = phoneNumber;
+                        _controller.generateOtp();
+                      } else {
+                        Get.snackbar(
+                          "Error",
+                          "Please enter a valid 10-digit phone number",
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.red,
+                          colorText: Colors.white,
+                        );
+                      }
+                    },
+                    child: _controller.isLoading.value
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text("Send the code"),
                   ),
-                  onPressed: () {
-                    if (phoneController.text.length == 10) {
-                      Get.to(() => MyVerify(phoneNumber: phoneController.text));
-                    } else {
-                      Get.snackbar("Error", "Please enter a valid 10-digit phone number");
-                    }
-                  },
-                  child: const Text("Send the code"),
-                ),
               ),
             ],
           ),

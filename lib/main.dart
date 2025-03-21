@@ -47,10 +47,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: "/LocationPage",
+      initialRoute: "/consultant",
       getPages: [
         GetPage(name: "/signin", page: () => MyPhone()),
-        GetPage(name: "/verifyOtp", page: () => MyVerify(phoneNumber: "your_phone_number_here")),
+        GetPage(name: "/verifyotp", page: () => MyVerify(phoneNumber: '',)),
         GetPage(name: "/splash", page: () => SplashScreen()),
         GetPage(name: "/dash", page: () => DashBoard()),
         GetPage(name: "/farm", page: () => FarmerProductDash()),

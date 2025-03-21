@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:new_app/Controllers/verify_otp.dart';
 import 'package:new_app/Theme/theme.dart';
 import 'package:pinput/pinput.dart';
 
 class MyVerify extends StatelessWidget {
   final String phoneNumber;
 
-  const MyVerify({Key? key, required this.phoneNumber}) : super(key: key);
+  MyVerify({Key? key, required this.phoneNumber}) : super(key: key);
+
+  final VerifyOtpController verifyOtpController = Get.put(VerifyOtpController());  // ✅ Ensure controller is registered
 
   @override
   Widget build(BuildContext context) {
+    verifyOtpController.mobileNumber.value = phoneNumber;  // ✅ Assign value properly
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Get.back(),
           icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.black),
         ),
         elevation: 0,
@@ -33,30 +38,44 @@ class MyVerify extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.9,
                 height: MediaQuery.of(context).size.height * 0.4,
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-              Text("Verifying +91 $phoneNumber",
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 20),
+
+              // ✅ Wrap this text in Obx so it updates when `mobileNumber` changes
+              Obx(() => Text(
+                "Verifying +91 ${verifyOtpController.mobileNumber.value}",
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              )),
+
               const SizedBox(height: 30),
-              Pinput(
+
+              // ✅ OTP Input Field
+              Obx(() => Pinput(
                 length: 6,
                 showCursor: true,
-                onCompleted: (pin) => print(pin),
-              ),
+                onChanged: (value) => verifyOtpController.otpCode.value = value,
+                onCompleted: (pin) => verifyOtpController.otpCode.value = pin,
+              )),
+
               const SizedBox(height: 20),
+
+              // ✅ Verify Button
               SizedBox(
                 width: double.infinity,
                 height: 45,
-                child: ElevatedButton(
+                child: Obx(() => ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: AppColors.lightgreen,
+                    backgroundColor: AppColors.lightgreen,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
-                  onPressed: () {
-                    Get.toNamed("/farm_detail_Form");
-                  },
-                  child: const Text("Verify Phone Number"),
-                ),
+                  onPressed: verifyOtpController.isLoading.value
+                      ? null
+                      : () => verifyOtpController.verifyOtp(),
+                  child: verifyOtpController.isLoading.value
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text("Verify Phone Number"),
+                )),
               ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -73,4 +92,3 @@ class MyVerify extends StatelessWidget {
     );
   }
 }
-

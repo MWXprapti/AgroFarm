@@ -56,6 +56,12 @@ class _SettingsPageState extends State<SettingsPage> {
                       onTap: () => _showLanguageBottomSheet(context),
                     ),
                     _buildSettingOption(
+                      icon: Icons.sunny,
+                      title: "Weather Update",
+                      subtitle: "You can see weather update here",
+                      onTap: () => Get.toNamed("/LocationPage"),
+                    ),
+                    _buildSettingOption(
                       icon: Icons.logout_outlined,
                       title: "Logout",
                       subtitle: "You can logout",
