@@ -1,13 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:new_app/Controllers/Product_Controller.dart';
+import 'package:new_app/Controllers/ProductUploadController.dart';
 import 'package:new_app/Theme/preBuild_widget.dart';
 import 'package:new_app/Theme/theme.dart';
-
-
 
 class AddProductPage extends StatefulWidget {
   @override
@@ -19,15 +18,7 @@ class _AddProductPageState extends State<AddProductPage> {
 
   var selectedCategory = "Herbicides".obs;
   var selectedUnit = "Kg".obs;
-  var imageFile = Rx<File?>(null);
   var currentStep = 0.obs;
-
-  Future<void> pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      imageFile.value = File(pickedFile.path);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +32,7 @@ class _AddProductPageState extends State<AddProductPage> {
       ),
       body: Obx(() => Column(
         children: [
-          // Custom Progress Bar
+          // Progress Bar
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Column(
@@ -74,7 +65,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   children: [
                     Container(
                       height: 10,
-                      width: MediaQuery.of(context).size.width*0.85,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(
                         color: Colors.grey[300],
                         borderRadius: BorderRadius.circular(5),
@@ -83,7 +74,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     AnimatedContainer(
                       duration: Duration(milliseconds: 900),
                       height: 10,
-                      width: MediaQuery.of(context).size.width*0.85 * (currentStep.value / 2),
+                      width: MediaQuery.of(context).size.width * 0.85 * (currentStep.value / 2),
                       decoration: BoxDecoration(
                         color: AppColors.yellow,
                         borderRadius: BorderRadius.circular(5),
@@ -96,12 +87,12 @@ class _AddProductPageState extends State<AddProductPage> {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 15,right: 15),
+              padding: const EdgeInsets.only(left: 15, right: 15),
               child: Column(
                 children: [
                   if (currentStep.value == 0) ...[
                     buildTextField(controller.productNameController, "Product Name", Icons.shopping_bag),
-                    buildDropdown(controller.selectedCategory, "Category", [
+                    buildDropdown(selectedCategory, "Category", [
                       "Herbicides",
                       "Growth Promoters",
                       "Fungicides",
@@ -112,12 +103,19 @@ class _AddProductPageState extends State<AddProductPage> {
                       "Insecticides",
                       "Organic farming",
                       "Animal husbandry"
-                    ],Icons.category_outlined), // Use the Bottom Sheet for category selection
+                    ], Icons.category_outlined,
+                        onChanged: (value) {
+                          selectedCategory.value = value!;
+                          controller.category.value = value;
+                        }),
                     buildTextField(controller.descriptionController, "Description", Icons.description, isMultiline: true),
                   ] else if (currentStep.value == 1) ...[
                     buildTextField(controller.priceController, "Price (₹)", Icons.attach_money, isNumber: true),
                     buildTextField(controller.stockQuantityController, "Stock Quantity", Icons.storage, isNumber: true),
-                    buildDropdown(controller.selectedUnit, "Unit", ["Kg", "Litre", "Packet", "Piece"],Icons.ad_units_outlined),
+                    buildDropdown(selectedUnit, "Unit", ["Kg", "Litre", "Packet", "Piece"], Icons.ad_units_outlined, onChanged: (value) {
+                      selectedUnit.value = value!;
+                      controller.unit.value = value;
+                    }),
                     buildTextField(controller.perUnitQuantityController, "Per Unit Quantity", Icons.balance, isNumber: true),
                   ] else ...[
                     GestureDetector(
@@ -174,10 +172,21 @@ class _AddProductPageState extends State<AddProductPage> {
                     padding: const EdgeInsets.only(bottom: 80),
                     child: ElevatedButton(
                       onPressed: () async {
+                        controller.category.value = selectedCategory.value;
+                        controller.unit.value = selectedUnit.value;
+
+                        if (controller.imageFile.value != null) {
+                          final bytes = await controller.imageFile.value!.readAsBytes();
+                          controller.imageUrl.value = base64Encode(bytes);
+                        }
+
+                        // ✅ Assign token here (replace this with actual token source)
+                        controller.token.value = "your_actual_token_here";
+
                         await controller.uploadProduct();
                       },
                       child: Obx(() => controller.isUploading.value
-                          ? CircularProgressIndicator(color: Colors.white) // Show loading indicator
+                          ? CircularProgressIndicator(color: Colors.white)
                           : Text("Submit", style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold))),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.yellow,
@@ -190,8 +199,7 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
           ),
         ],
-      ),
-      ),
+      )),
     );
   }
 }

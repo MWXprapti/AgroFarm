@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:new_app/Controllers/farmerProfileFetch_Controller.dart';
 import 'package:new_app/Theme/theme.dart';
+import 'dart:convert';
 
 class FarmerProfilePage extends StatefulWidget {
   @override
@@ -14,6 +16,8 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
   late ScrollController _scrollController;
   double _scrollOffset = 0.0;
 
+  final FarmerProfileFetchController controller_ = Get.put(FarmerProfileFetchController());
+
   @override
   void initState() {
     super.initState();
@@ -23,6 +27,10 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
         _scrollOffset = _scrollController.offset;
       });
     });
+
+
+    // Fetch farmer details when the page opens
+    controller_.fetchFarmerDetails();
   }
 
   @override
@@ -59,7 +67,7 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                 icon: Icon(
                   Icons.arrow_back,
                   color: Colors.white,
-                  size: w * 0.08, // Adjusted size for responsiveness
+                  size: w * 0.08,
                 ),
                 onPressed: () => Get.back(),
               ),
@@ -68,9 +76,9 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
               Padding(
                 padding: const EdgeInsets.only(right: 30),
                 child: IconButton(
-                  icon: Icon(FontAwesomeIcons.userPen, size: w * 0.06), // New icon
+                  icon: Icon(FontAwesomeIcons.userPen, size: w * 0.06),
                   onPressed: () {
-                    // Edit profile function
+                    Get.toNamed("/editProfile");
                   },
                 ),
               )
@@ -82,14 +90,14 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                 percent = percent.clamp(0, 1);
 
                 return FlexibleSpaceBar(
-                  title: Text(
-                    "Dhrumit Boricha",
+                  title: Obx(() => Text(
+                    controller_.name.value,
                     style: TextStyle(
                       fontSize: w * 0.05,
                       fontWeight: FontWeight.bold,
                       color: Color.lerp(Colors.white, Colors.black, percent),
                     ),
-                  ),
+                  )),
                   centerTitle: true,
                   background: Stack(
                     alignment: Alignment.center,
@@ -106,18 +114,26 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                         ),
                       ),
                       Positioned(
-                        bottom: h * 0.12, // Adjusted position for better small-screen support
-                        child: CircleAvatar(
-                          radius: w * 0.150,
-                          backgroundColor: Colors.black12,
-                          child: CircleAvatar(
-                            backgroundColor: AppColors.cream,
-                            radius: w * 0.140,
-                            backgroundImage:
-                            AssetImage("assets/profile_image.png"),
-                          ),
-                        ),
+                        bottom: 100,
+                        child: Obx(() {
+                          final imageData = controller_.profileImage.value;
+                          print("📸 Profile Image Length: ${imageData?.length ?? 0} bytes");
+
+                          bool isImageValid = imageData != null && imageData.length > 500;
+
+                          return CircleAvatar(
+                            backgroundColor: Colors.grey.shade200,
+                            radius: 50,
+                            backgroundImage: NetworkImage(controller_.profileImage.value),
+                            // backgroundImage: isImageValid ? NetworkImage("https://admin.multiwebx.com/farmerAPI/uploads/userProfile/1744026182.png") : null,
+                            child: !isImageValid
+                                ? Icon(Icons.person, size: 50, color: Colors.grey)
+                                : null,
+                          );
+                        }),
                       ),
+
+
                     ],
                   ),
                 );
@@ -129,24 +145,21 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
               [
                 SizedBox(height: h * 0.03),
                 Column(
-                  mainAxisSize: MainAxisSize.min, // Important for small screens
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
                       color: AppColors.bgcolor,
                       child: Column(
                         children: [
-                          _buildInfoRow(LucideIcons.mail, "Email", "heard_j@gmail.com", w),
-                          _buildInfoRow(LucideIcons.phone, "Phone", "9898712132", w),
-                          _buildInfoRow(LucideIcons.globe, "Website", "www.randomweb.com", w),
-                          _buildInfoRow(LucideIcons.mapPin, "Location", "Antigua", w),
-                          _buildInfoRow(LucideIcons.building, "Business Name", "Agrofarm", w),
-                          _buildInfoRow(LucideIcons.briefcase, "Firm Name", "XYZ", w),
-                          _buildInfoRow(LucideIcons.file, "GST Number", "24ABCDE1234F1Z5", w),
-                          _buildInfoRow(LucideIcons.user, "Authorized Representative", "Dhrumit Boricha", w),
-                          _buildInfoRow(LucideIcons.map, "Address", "123 Street, City, State", w),
-                          _buildInfoRow(LucideIcons.map, "Pincode", "123456", w),
-                          _buildInfoRow(LucideIcons.map, "State", "Gujarat", w),
-                          _buildInfoRow(LucideIcons.map, "City", "Ahmedabad", w),
+                          Obx(() => _buildInfoRow(LucideIcons.phone, "Phone", controller_.phone.value, w)),
+                          Obx(() => _buildInfoRow(LucideIcons.building, "City", controller_.city.value, w)),
+                          Obx(() => _buildInfoRow(LucideIcons.mapPin, "State", controller_.state.value, w)),
+                          Obx(() => _buildInfoRow(LucideIcons.map, "Address", controller_.address.value, w)),
+                          Obx(() => _buildInfoRow(LucideIcons.code, "Pin Code", controller_.pincode.value, w)),
+                          Obx(() => _buildInfoRow(LucideIcons.crop, "Crop Name", controller_.cropName.value, w)),
+                          Obx(() => _buildInfoRow(LucideIcons.briefcase, "Land Size", controller_.landSize.value, w)),
+                          Obx(() => _buildInfoRow(LucideIcons.user, "Referred By", controller_.referredBy.value, w)),
+                          Obx(() => _buildInfoRow(LucideIcons.user, "Agent Name/Referral Code", controller_.agentName.value, w)),
                         ],
                       ),
                     ),
@@ -165,13 +178,13 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
       margin: EdgeInsets.symmetric(vertical: w * 0.02, horizontal: w * 0.05),
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(width: 1,color: Colors.black12,)
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(width: 1, color: Colors.black12),
       ),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.lightgreen, size: w * 0.06), // Adjusted size
+          Icon(icon, color: AppColors.lightgreen, size: w * 0.06),
           SizedBox(width: 15),
           Expanded(
             child: Text(
@@ -184,7 +197,7 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
               fit: BoxFit.scaleDown,
               alignment: Alignment.centerRight,
               child: Text(
-                value,
+                value.isNotEmpty ? value : "N/A",
                 style: TextStyle(fontSize: w * 0.04, color: Colors.black54),
               ),
             ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/Agro/Screens/Farmer_form.dart';
-import 'package:new_app/Agro/Screens/signIn.dart';
-import 'package:new_app/CommonScreens/Option.dart';
+import 'package:new_app/Agro/Screens/auth/signIn.dart';
 import 'package:new_app/Theme/theme.dart';
 
 
@@ -95,7 +93,7 @@ class _IntroState extends State<Intro> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>  MyPhone(),
+                      builder: (context) =>  PhoneVerificationScreen(),
                     ),
                   );
                 },

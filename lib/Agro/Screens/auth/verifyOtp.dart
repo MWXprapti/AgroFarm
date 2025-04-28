@@ -9,11 +9,15 @@ class MyVerify extends StatelessWidget {
 
   MyVerify({Key? key, required this.phoneNumber}) : super(key: key);
 
-  final VerifyOtpController verifyOtpController = Get.put(VerifyOtpController());  // ✅ Ensure controller is registered
+  final VerifyOtpController verifyOtpController = Get.put(VerifyOtpController());
 
   @override
   Widget build(BuildContext context) {
-    verifyOtpController.mobileNumber.value = phoneNumber;  // ✅ Assign value properly
+    // ✅ Debug print to check received phone number
+    print("Received phone number in Verify Screen: $phoneNumber");
+
+    // ✅ Set the mobile number in the controller
+    verifyOtpController.setMobileNumber(phoneNumber);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -40,7 +44,7 @@ class MyVerify extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // ✅ Wrap this text in Obx so it updates when `mobileNumber` changes
+              // ✅ Show verifying message dynamically
               Obx(() => Text(
                 "Verifying +91 ${verifyOtpController.mobileNumber.value}",
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -49,12 +53,18 @@ class MyVerify extends StatelessWidget {
               const SizedBox(height: 30),
 
               // ✅ OTP Input Field
-              Obx(() => Pinput(
+              Pinput(
                 length: 6,
                 showCursor: true,
-                onChanged: (value) => verifyOtpController.otpCode.value = value,
-                onCompleted: (pin) => verifyOtpController.otpCode.value = pin,
-              )),
+                onChanged: (value) {
+                  verifyOtpController.otpCode.value = value.trim();
+                  print("Entered OTP: ${verifyOtpController.otpCode.value}"); // ✅ Debugging OTP input
+                },
+                onCompleted: (pin) {
+                  verifyOtpController.otpCode.value = pin.trim();
+                  print("Final OTP: ${verifyOtpController.otpCode.value}"); // ✅ Debugging final OTP
+                },
+              ),
 
               const SizedBox(height: 20),
 
@@ -69,7 +79,10 @@ class MyVerify extends StatelessWidget {
                   ),
                   onPressed: verifyOtpController.isLoading.value
                       ? null
-                      : () => verifyOtpController.verifyOtp(),
+                      : () {
+                    print("Verifying OTP for ${verifyOtpController.mobileNumber.value}");
+                    verifyOtpController.verifyOtp();
+                  },
                   child: verifyOtpController.isLoading.value
                       ? const CircularProgressIndicator(color: Colors.white)
                       : const Text("Verify Phone Number"),

@@ -63,6 +63,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     _buildSettingOption(
                       icon: Icons.logout_outlined,
+                      title: "Reels",
+                      subtitle: "You can watch short videos",
+                      onTap: () => Get.toNamed("/reels"),
+                    ),
+                    _buildSettingOption(
+                      icon: Icons.logout_outlined,
                       title: "Logout",
                       subtitle: "You can logout",
                       onTap: () => Get.toNamed("/logout"),

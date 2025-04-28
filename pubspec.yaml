@@ -35,11 +35,12 @@ dependencies:
   firebase_auth:
   firebase_storage:
   firebase_phone_auth_handler:
-  google_fonts: 5.1.0
+  google_fonts: ^5.1.0
   get:
   flashy_tab_bar2:
   firebase_analytics:
   cloud_firestore:
+  flutter_image_compress: ^2.1.0
   carousel_slider: ^4.0.0
   image_picker:
   intl:
@@ -54,11 +55,17 @@ dependencies:
   dot_navigation_bar:
   firebase_core:
   google_mlkit_translation:
-  dio:
+  dio: ^5.3.2
   geolocator:
   flutter_glow:
   flutter_spinkit:
   http:
+  shared_preferences:
+  youtube_player_flutter: ^8.1.2
+  path_provider: ^2.1.1
+  path: ^1.8.3
+  shimmer:
+
 
 dev_dependencies:
   flutter_test:

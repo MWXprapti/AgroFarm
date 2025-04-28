@@ -1,7 +1,7 @@
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
-import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_app/Agro/Screens/FarmerToFarmer/Dash_Farmer.dart';
 import 'package:new_app/Agro/Screens/Home.dart';
 import 'package:new_app/Agro/Screens/Product_ListingPage.dart';
 import 'package:new_app/Agro/Screens/SalesListing.dart';
@@ -29,9 +29,9 @@ class _DashBoardState extends State<DashBoard> {
 
   List<Widget> screens = [
     HomePage(),
-    AddProductPage(),
+    Farm_Dashboard(),
     ProductListing(),
-    SalesListPage(),
+    //SalesListPage(),
     SettingsPage()
   ];
 
@@ -107,10 +107,10 @@ class _DashBoardState extends State<DashBoard> {
               selectedColor: Colors.amberAccent,
             ),
 
-            DotNavigationBarItem(
-              icon: Icon(CupertinoIcons.list_bullet),
-              selectedColor: Colors.amberAccent,
-            ),
+            // DotNavigationBarItem(
+            //   icon: Icon(CupertinoIcons.list_bullet),
+            //   selectedColor: Colors.amberAccent,
+            // ),
             DotNavigationBarItem(
               icon: Icon(Icons.settings_outlined),
               selectedColor: Colors.amberAccent,

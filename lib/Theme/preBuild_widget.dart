@@ -29,10 +29,15 @@ Widget buildTextField(TextEditingController controller, String label, IconData i
   );
 }
 
-Widget buildDropdown(RxString selectedValue, String label, List<String> items,IconData icon) {
+Widget buildDropdown(
+    RxString selectedValue,
+    String label,
+    List<String> items,
+    IconData icon, {
+      void Function(String)? onChanged, // <-- Add this optional parameter
+    }) {
   return GestureDetector(
     onTap: () {
-      // Show Bottom Sheet when tapped
       Get.bottomSheet(
         Container(
           padding: EdgeInsets.all(16),
@@ -42,16 +47,17 @@ Widget buildDropdown(RxString selectedValue, String label, List<String> items,Ic
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
-
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 label,
-                style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.black),
+                style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
-
               SizedBox(height: 8),
               Expanded(
                 child: ListView(
@@ -60,6 +66,9 @@ Widget buildDropdown(RxString selectedValue, String label, List<String> items,Ic
                       title: Text(item),
                       onTap: () {
                         selectedValue.value = item;
+                        if (onChanged != null) {
+                          onChanged(item); // <-- Trigger the callback
+                        }
                         Get.back(); // Close the bottom sheet
                       },
                     );
@@ -77,10 +86,6 @@ Widget buildDropdown(RxString selectedValue, String label, List<String> items,Ic
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        // boxShadow: [
-        //   BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(4, 4)),
-        //   BoxShadow(color: Colors.white, blurRadius: 8, offset: Offset(-4, -4)),
-        // ],
       ),
       child: Obx(() {
         return Padding(
@@ -89,14 +94,15 @@ Widget buildDropdown(RxString selectedValue, String label, List<String> items,Ic
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 15),
-                child: Icon(Icons.category_outlined, color: AppColors.lightgreen),
+                child: Icon(icon, color: AppColors.lightgreen),
               ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
                     selectedValue.value,
-                    style: GoogleFonts.poppins(color: Colors.black, fontSize: 16),
+                    style: GoogleFonts.poppins(
+                        color: Colors.black, fontSize: 16),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

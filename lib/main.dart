@@ -5,24 +5,24 @@ import 'package:new_app/Agro/Screens/ConsultantForm.dart';
 
 // Screens
 import 'package:new_app/Agro/Screens/DashBoard.dart';
+import 'package:new_app/Agro/Screens/FarmerToFarmer/Dash_Farmer.dart';
 import 'package:new_app/Agro/Screens/FarmerProfile.dart';
 import 'package:new_app/Agro/Screens/Farmer_form.dart';
 import 'package:new_app/Agro/Screens/Product_ListingPage.dart';
 import 'package:new_app/Agro/Screens/Product_UploadPage.dart';
-import 'package:new_app/Agro/Screens/Product_dashBoard.dart';
 import 'package:new_app/Agro/Screens/Report_Page.dart';
 import 'package:new_app/Agro/Screens/SalesListing.dart';
+import 'package:new_app/Agro/Screens/auth/signIn.dart';
+import 'package:new_app/Agro/Screens/editProfile.dart';
 import 'package:new_app/Agro/Screens/translateScreen.dart';
 import 'package:new_app/Agro/Screens/weather.dart';
 import 'package:new_app/CommonScreens/Splash.dart';
 import 'package:new_app/Agro/Screens/product_details.dart';
-import 'package:new_app/Agro/Screens/signIn.dart';
-import 'package:new_app/Agro/Screens/verifyOtp.dart';
+import 'package:new_app/Agro/Screens/auth/verifyOtp.dart';
 import 'package:new_app/CommonScreens/Intro.dart';
-import 'package:new_app/CommonScreens/Option.dart';
 import 'package:new_app/CommonScreens/reels.dart';
+import 'package:new_app/CommonScreens/try.dart';
 import 'package:new_app/weather_Page/location_page.dart';
-import 'package:new_app/weather_Page/weather_home.dart';
 
 
 void main() async {
@@ -47,27 +47,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: "/consultant",
+      initialRoute: "/splash",
       getPages: [
-        GetPage(name: "/signin", page: () => MyPhone()),
+        GetPage(name: "/signin", page: () => PhoneVerificationScreen()),
         GetPage(name: "/verifyotp", page: () => MyVerify(phoneNumber: '',)),
         GetPage(name: "/splash", page: () => SplashScreen()),
         GetPage(name: "/dash", page: () => DashBoard()),
-        GetPage(name: "/farm", page: () => FarmerProductDash()),
-        GetPage(name: "/product", page: () => ProductDetails()),
+        //GetPage(name: "/farm", page: () => FarmerProductDash()),
+        GetPage(name: "/product", page: () => ProductDetails(productId: '35',)),
         GetPage(name: "/farm_detail_Form", page: () => FarmerProfileForm()),
         GetPage(name: "/report", page: () => ReportPage()),
         GetPage(name: "/add", page: () => AddProductPage()),
         GetPage(name: "/test", page: () => SalesListPage()),
         GetPage(name: "/list", page: () => ProductListing()),
-        GetPage(name: "/option", page: () => OptionPage()),
         GetPage(name: "/intro", page: () => Intro()),
+        GetPage(name: "/editProfile", page: () => EditProfilePage()),
         GetPage(name: "/farm_profile", page: () => FarmerProfilePage()),
-        GetPage(name: "/reels", page: () => ReelsPage()),
+        GetPage(name: "/reels", page: () => ReelsScreen()),
         GetPage(name: "/translate", page: () => ApiTranslatorScreen()),
         GetPage(name: "/weather", page: () => weatherPage()),
         GetPage(name: "/LocationPage", page: () => LocationPage()),
         GetPage(name: "/consultant", page: () => consultantProfileForm(uid: '',)),
+        GetPage(name: "/profileup", page: () => ProfileUploader()),
+        GetPage(name: "/dashboard_farmer", page: () => Farm_Dashboard()),
+
       ],
     );
   }
