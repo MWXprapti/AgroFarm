@@ -21,7 +21,6 @@ import 'package:new_app/Agro/Screens/product_details.dart';
 import 'package:new_app/Agro/Screens/auth/verifyOtp.dart';
 import 'package:new_app/CommonScreens/Intro.dart';
 import 'package:new_app/CommonScreens/reels.dart';
-import 'package:new_app/CommonScreens/try.dart';
 import 'package:new_app/weather_Page/location_page.dart';
 
 
@@ -68,7 +67,6 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/weather", page: () => weatherPage()),
         GetPage(name: "/LocationPage", page: () => LocationPage()),
         GetPage(name: "/consultant", page: () => consultantProfileForm(uid: '',)),
-        GetPage(name: "/profileup", page: () => ProfileUploader()),
         GetPage(name: "/dashboard_farmer", page: () => Farm_Dashboard()),
 
       ],
