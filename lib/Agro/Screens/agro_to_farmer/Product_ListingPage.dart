@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../Controllers/agro_product_controller.dart';
+import '../../../Controllers/agro_product_controller.dart';
+import 'agro_product_details.dart';
 
 class ProductListing extends StatefulWidget {
   const ProductListing({super.key});
@@ -126,7 +127,7 @@ class _ProductListingState extends State<ProductListing> {
                   itemBuilder: (context, index) {
                     final product = controller.productList[index];
                     return GestureDetector(
-                      onTap: () => Get.toNamed("product"),
+                      onTap: () => Get.to(() => ProductDetailsPage(product: product)),
                       child: Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),

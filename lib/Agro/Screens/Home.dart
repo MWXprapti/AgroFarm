@@ -1,110 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:new_app/Agro/Screens/FarmerToFarmer/product_listing_farmet.dart';
+import 'package:new_app/Agro/Screens/agro_to_farmer/Product_ListingPage.dart';
+import 'package:new_app/Controllers/agro_product_controller.dart';
+import 'package:new_app/Controllers/farmertofarmer_product_controller.dart';
 import 'package:new_app/Theme/theme.dart';
 import 'package:get/get.dart';
+import 'package:new_app/widgets/agro_product_card.dart';
+import 'package:new_app/widgets/farmer_to_farmer_product_card.dart';
 
-class DrinkCardPageGrid extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03, vertical: 10),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return GridView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: screenWidth > 600 ? 3 : 2,
-              crossAxisSpacing: screenWidth * 0.04,
-              mainAxisSpacing: screenHeight * 0.03,
-              childAspectRatio: 0.7,
-            ),
-            itemCount: 6,
-            itemBuilder: (context, index) {
-              return Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned(
-                    bottom: screenHeight * 0.02,
-                    left: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed("product");
-                      },
-                      child: Container(
-                        height: screenHeight * 0.22,
-                        decoration: BoxDecoration(
-                          color: Colors.green.shade50,
-                          borderRadius: BorderRadius.circular(25),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.4),
-                              blurRadius: 10,
-                              offset: Offset(4, 4),
-                            ),
-                          ],
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.04, vertical: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              'White Chocolate Cappuccino',
-                              style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: screenWidth * 0.04, // Responsive text
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: screenHeight * 0.008),
-                            Text(
-                              'Delicious & creamy',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: screenWidth * 0.035, // Responsive text
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: -screenHeight * 0.01,
-                    left: screenWidth * 0.08,
-                    child: Image.asset(
-                      'assets/fertilizer.png',
-                      height: screenHeight * 0.18,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  Positioned(
-                    bottom: screenHeight * 0.02,
-                    right: screenWidth * 0.02,
-                    child: Container(
-                      padding: EdgeInsets.all(screenWidth * 0.02),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
-                      child: Icon(Icons.favorite_border, color: Colors.red),
-                    ),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -114,6 +20,16 @@ class HomePage extends StatefulWidget {
 
  bool fav = false;
 class _HomePageState extends State<HomePage> {
+
+  final AgroProductController agroController = Get.put(AgroProductController());
+  final FarmertoFarmerProductController farmerController = Get.put(FarmertoFarmerProductController());
+
+  @override
+  void initState() {
+    super.initState();
+    agroController.fetchProducts();
+    farmerController.fetchProducts();
+  }
   final List<String> offers = [
     'assets/agri1.jpg',
     'assets/agri2.jpg',
@@ -179,29 +95,29 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 children: [
                   //location
-                  Container(
-                    height: MediaQuery.of(context).size.height*0.07,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 8,
-                          offset: Offset(4, 4),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0,right: 8,top: 13,bottom: 13),
-                      child: Row(
-                        children: [
-                          Icon(Icons.location_on_outlined,color: Colors.red,),
-                          Text("Location",)
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   height: MediaQuery.of(context).size.height*0.07,
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.white,
+                  //     borderRadius: BorderRadius.circular(15),
+                  //     boxShadow: [
+                  //       BoxShadow(
+                  //         color: Colors.black26,
+                  //         blurRadius: 8,
+                  //         offset: Offset(4, 4),
+                  //       ),
+                  //     ],
+                  //   ),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(left: 8.0,right: 8,top: 13,bottom: 13),
+                      // child: Row(
+                      //   children: [
+                      //     Icon(Icons.location_on_outlined,color: Colors.red,),
+                      //     Text("Location",)
+                      //   ],
+                      // ),
+                    // ),
+                  // ),
                   SizedBox(width: 5,),
                   // Search Bar Container
                   Expanded(
@@ -378,11 +294,27 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text("Recommended for you",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                   Spacer(),
-                  Text("See All",style: TextStyle(color: AppColors.yellow,fontSize: 20),)
+                  GestureDetector(
+                      onTap: () => Get.to(() => ProductListing()),
+                      child: Text("See All",style: TextStyle(color: AppColors.yellow,fontSize: 20),))
                 ],
               ),
             ),
-            DrinkCardPageGrid(),
+            //latest 6 product
+            Obx(() {
+              if (agroController.isLoading.value) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              final products = agroController.productList.take(6).toList();
+
+              if (products.isEmpty) {
+                return Center(child: Text("No products available"));
+              }
+
+              return DrinkCardPageGrid(products: products);
+            }),
+
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -390,12 +322,26 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text("Farmer products",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                   Spacer(),
-                  Text("See All",style: TextStyle(color: AppColors.yellow,fontSize: 20),)
+                  GestureDetector(
+                      onTap: () => Get.to(() => FarmertoFarmerProductListing()),
+                      child: Text("See All",style: TextStyle(color: AppColors.yellow,fontSize: 20),))
                 ],
               ),
             ),
             SizedBox(height: 20,),
-            DrinkCardPageGrid(),
+            Obx(() {
+              if (farmerController.isLoading.value) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              final products = farmerController.productList.take(6).toList();
+
+              if (products.isEmpty) {
+                return Center(child: Text("No products available"));
+              }
+
+              return FTOF_DrinkCardPageGrid(products: products);
+            }),
           ],
         ),
       ),
