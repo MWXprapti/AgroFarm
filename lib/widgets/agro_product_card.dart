@@ -88,7 +88,8 @@ class DrinkCardPageGrid extends StatelessWidget {
                 top: -screenHeight * 0.01,
                 left: screenWidth * 0.08,
                 child: Image.network(
-                  product.imageUrl,
+                  // product.imageUrl,
+                  "https://img.freepik.com/premium-photo/flax-seed-linseed-isolated-white-surface_256988-1126.jpg?w=900",
                   height: screenHeight * 0.18,
                   fit: BoxFit.contain,
                   errorBuilder: (_, __, ___) => Icon(Icons.broken_image),

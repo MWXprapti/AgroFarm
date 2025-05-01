@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
+import 'package:new_app/Controllers/farmerProfileFetch_Controller.dart';
 import 'package:new_app/Controllers/own_ProductController.dart';
 import 'package:new_app/theme/theme.dart';
 import 'package:shimmer/shimmer.dart';
@@ -17,6 +18,7 @@ class Farm_Dashboard extends StatefulWidget {
 class _Farm_DashboardState extends State<Farm_Dashboard> {
   final OwnProductController controller = Get.put(OwnProductController());
   String? username;
+  final FarmerProfileFetchController controller_ = Get.put(FarmerProfileFetchController());
 
   @override
   void initState() {
@@ -25,6 +27,7 @@ class _Farm_DashboardState extends State<Farm_Dashboard> {
       statusBarColor: AppColors.lightgreen,
     ));
     controller.fetchProducts(); // Fetch products
+    controller_.fetchFarmerDetails();
   }
 
   @override
@@ -76,15 +79,13 @@ class _Farm_DashboardState extends State<Farm_Dashboard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Welcome".tr,
-              style: AppTextStyles.headingStyle.copyWith(color: Colors.white),
-            ),
+
             Text(
-              username != null ? "$username! 👋".tr : "Loading...".tr,
-              style: GoogleFonts.podkova(
-                fontSize: w * 0.06,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+              "Farmer \nDashboard",
+              style: GoogleFonts.poppins(
+                fontSize: w * 0.045,
+                fontWeight: FontWeight.w400,
+                color: Colors.white70,
               ),
             ),
           ],

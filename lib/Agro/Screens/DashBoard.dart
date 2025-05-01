@@ -1,11 +1,13 @@
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:new_app/Agro/Screens/FarmerToFarmer/Dash_Farmer.dart';
 import 'package:new_app/Agro/Screens/Home.dart';
 import 'package:new_app/Agro/Screens/agro_to_farmer/Product_ListingPage.dart';
 import 'package:new_app/Agro/Screens/SalesListing.dart';
 import 'package:new_app/Agro/Screens/SettingPage.dart';
+import 'package:new_app/Controllers/farmerProfileFetch_Controller.dart';
 import 'package:new_app/Theme/theme.dart';
 import 'Product_UploadPage.dart';
 
@@ -18,7 +20,13 @@ class DashBoard extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoard> {
   int _selectedIndex = 0;
+  final FarmerProfileFetchController controller_ = Get.put(FarmerProfileFetchController());
+  @override
+  void initState() {
+    super.initState();
+    controller_.fetchFarmerDetails();
 
+  }
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -43,7 +51,7 @@ class _DashBoardState extends State<DashBoard> {
         extendBody: true,
 
           appBar: AppBar(
-            title: Text("Hello, User.", style: TextStyle(color: AppColors.bgcolor, fontSize: 30)),
+            title: Text("Hello, ${controller_.name.value}", style: TextStyle(color: AppColors.bgcolor, fontSize: 30)),
             backgroundColor: AppColors.lightgreen,
             shadowColor: Colors.transparent,
           ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_app/Agro/Screens/FarmerToFarmer/product_listing_farmet.dart';
 import 'package:new_app/Agro/Screens/agro_to_farmer/Product_ListingPage.dart';
 import 'package:new_app/Controllers/agro_product_controller.dart';
+import 'package:new_app/Controllers/farmerProfileFetch_Controller.dart';
 import 'package:new_app/Controllers/farmertofarmer_product_controller.dart';
 import 'package:new_app/Theme/theme.dart';
 import 'package:get/get.dart';
@@ -23,12 +24,15 @@ class _HomePageState extends State<HomePage> {
 
   final AgroProductController agroController = Get.put(AgroProductController());
   final FarmertoFarmerProductController farmerController = Get.put(FarmertoFarmerProductController());
+  final FarmerProfileFetchController controller_ = Get.put(FarmerProfileFetchController());
 
   @override
   void initState() {
     super.initState();
     agroController.fetchProducts();
     farmerController.fetchProducts();
+    controller_.fetchFarmerDetails();
+
   }
   final List<String> offers = [
     'assets/agri1.jpg',
