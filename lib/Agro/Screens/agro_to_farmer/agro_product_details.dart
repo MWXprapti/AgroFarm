@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../model/agro_produ_model.dart';
 
 class ProductDetailsPage extends StatelessWidget {
@@ -13,75 +12,73 @@ class ProductDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(product.name),
-        backgroundColor: Colors.green, // Adjust color if needed
+        backgroundColor: Colors.green,
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Hero Image Section
-            Container(
-              height: MediaQuery.of(context).size.height * 0.35,
-              decoration: BoxDecoration(
-                color: Colors.green.shade200,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(200),
-                  bottomRight: Radius.circular(200),
-                ),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(product.imageUrl),
+            // Proper Hero Image Section with shape and smooth styling
+            ClipPath(
+              clipper: _BottomCurvedClipper(),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.35,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(product.imageUrl),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 30),
 
+            // Product name and category + price
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Product Name and Category
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        product.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                          color: Colors.black,
+                  // Name & Category
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        product.category,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.grey,
+                        const SizedBox(height: 10),
+                        Text(
+                          product.category,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  const Spacer(),
                   // Price
-                  Column(
-                    children: [
-                      Text(
-                        "₹${product.price}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40,
-                          color: Colors.green,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    "₹${product.price}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      color: Colors.green,
+                    ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 20),
 
-            // Description Section
+            // Description
             Padding(
               padding: const EdgeInsets.all(15),
               child: Text(
@@ -91,77 +88,99 @@ class ProductDetailsPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // Seller Details Section
+            // Seller Details
             _buildSectionTitle("Seller Details"),
             // Padding(
-            //   padding: const EdgeInsets.all(10.0),
+            //   padding: const EdgeInsets.symmetric(horizontal: 15),
             //   child: Column(
             //     crossAxisAlignment: CrossAxisAlignment.start,
             //     children: [
             //       Text(
             //         "Name: ${product.sellerName}",
-            //         style: const TextStyle(fontSize: 18, color: Colors.black),
+            //         style: const TextStyle(fontSize: 18),
             //       ),
             //       Text(
             //         "Phone: ${product.sellerPhone}",
-            //         style: const TextStyle(fontSize: 18, color: Colors.black),
+            //         style: const TextStyle(fontSize: 18),
             //       ),
             //       Text(
             //         "Location: ${product.sellerLocation}",
-            //         style: const TextStyle(fontSize: 18, color: Colors.black),
+            //         style: const TextStyle(fontSize: 18),
             //       ),
             //     ],
             //   ),
             // ),
             const SizedBox(height: 30),
 
-            // Call to Action (Optional: Add Cart or Contact Button)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Add to Cart functionality or direct contact
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    ),
-                    child: const Text("Contact Seller"),
+            // Contact Seller Button
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  // Implement contact logic
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                ],
+                ),
+                child: const Text(
+                  "Contact Seller",
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
             ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
 
+  // Section Title Widget
   Widget _buildSectionTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(15),
       child: Container(
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.green,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
-            BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 10),
+            BoxShadow(color: Colors.black12, blurRadius: 5),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.white,
-            ),
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
       ),
     );
   }
+}
+
+// Custom Clipper for Image Curve
+class _BottomCurvedClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+
+    path.lineTo(0, size.height - 50);
+    path.quadraticBezierTo(
+      size.width / 2, size.height,
+      size.width, size.height - 50,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }

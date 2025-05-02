@@ -31,35 +31,44 @@ class DrinkCardPageGrid extends StatelessWidget {
         itemBuilder: (context, index) {
           final product = controller.productList[index];
 
-          return Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned(
-                bottom: screenHeight * 0.02,
-                left: 0,
-                right: 0,
-                child: GestureDetector(
-                  onTap: () {
-                     Get.to(() => ProductDetailsPage(product: product));
-                  },
-                  child: Container(
-                    height: screenHeight * 0.22,
-                    decoration: BoxDecoration(
-                      color: Colors.green.shade50,
-                      borderRadius: BorderRadius.circular(25),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.4),
-                          blurRadius: 10,
-                          offset: Offset(4, 4),
-                        ),
-                      ],
+          return GestureDetector(
+            onTap: () {
+              Get.to(() => ProductDetailsPage(product: product));
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.green.shade50,
+                borderRadius: BorderRadius.circular(25),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.4),
+                    blurRadius: 10,
+                    offset: Offset(4, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Image section
+                  ClipRRect(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                    child: AspectRatio(
+                      aspectRatio: 1.5,
+                      child: Image.network(
+                        product.imageUrl,
+                        // "https://img.freepik.com/premium-photo/flax-seed-linseed-isolated-white-surface_256988-1126.jpg?w=900",
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => Icon(Icons.broken_image),
+                      ),
                     ),
+                  ),
+                  // Info section
+                  Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.04, vertical: 10),
+                        horizontal: screenWidth * 0.04, vertical: screenHeight * 0.015),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
                           product.name,
@@ -71,7 +80,7 @@ class DrinkCardPageGrid extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: screenHeight * 0.008),
+                        SizedBox(height: screenHeight * 0.005),
                         Text(
                           product.category,
                           style: TextStyle(
@@ -82,32 +91,28 @@ class DrinkCardPageGrid extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-              ),
-              Positioned(
-                top: -screenHeight * 0.01,
-                left: screenWidth * 0.08,
-                child: Image.network(
-                  // product.imageUrl,
-                  "https://img.freepik.com/premium-photo/flax-seed-linseed-isolated-white-surface_256988-1126.jpg?w=900",
-                  height: screenHeight * 0.18,
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, __, ___) => Icon(Icons.broken_image),
-                ),
-              ),
-              Positioned(
-                bottom: screenHeight * 0.02,
-                right: screenWidth * 0.02,
-                child: Container(
-                  padding: EdgeInsets.all(screenWidth * 0.02),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
+                  Spacer(),
+                  // Favorite icon
+                  Padding(
+                    padding: EdgeInsets.only(
+                      right: screenWidth * 0.04,
+                      bottom: screenHeight * 0.015,
+                    ),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                        padding: EdgeInsets.all(screenWidth * 0.02),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                        child: Icon(Icons.favorite_border, color: Colors.red),
+                      ),
+                    ),
                   ),
-                  child: Icon(Icons.favorite_border, color: Colors.red),
-                ),
+                ],
               ),
-            ],
+            ),
           );
         },
       ),
