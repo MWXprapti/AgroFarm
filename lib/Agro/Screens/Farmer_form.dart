@@ -59,7 +59,7 @@ class _FarmerProfileFormState extends State<FarmerProfileForm> {
                       (val) => controller.cropName.value = val),
                   SizedBox(height: 16),
                   _buildDropdown(
-                      ['1', '2', '3', '4', '5+'], controller.landSize),
+                      ['1', '2', '3', '4', '5+'], controller.landSize, label: 'Land Acer'),
                   SizedBox(height: 16),
                   _buildReferralDropdown(),
                   Obx(
@@ -146,7 +146,8 @@ class _FarmerProfileFormState extends State<FarmerProfileForm> {
                 ),
               ),
           ],
-        )),
+        ),
+        ),
       ],
     );
   }
@@ -167,17 +168,21 @@ class _FarmerProfileFormState extends State<FarmerProfileForm> {
     );
   }
 
-  Widget _buildDropdown(List<String> items, RxString selectedItem) {
+  Widget _buildDropdown(
+      List<String> items,
+      RxString selectedItem, {
+        required String label,
+      }) {
     return Obx(
-      () => DropdownButtonFormField<String>(
-        value: selectedItem.value,
+          () => DropdownButtonFormField<String>(
+        value: selectedItem.value.isNotEmpty ? selectedItem.value : null,
         onChanged: (String? newValue) {
           if (newValue != null) {
             selectedItem.value = newValue;
           }
         },
         items: items.map(
-          (String item) {
+              (String item) {
             return DropdownMenuItem<String>(
               value: item,
               child: Text(item),
@@ -185,6 +190,7 @@ class _FarmerProfileFormState extends State<FarmerProfileForm> {
           },
         ).toList(),
         decoration: InputDecoration(
+          labelText: label,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -192,6 +198,7 @@ class _FarmerProfileFormState extends State<FarmerProfileForm> {
       ),
     );
   }
+
 
   Widget _buildReferralDropdown() {
     return Obx(

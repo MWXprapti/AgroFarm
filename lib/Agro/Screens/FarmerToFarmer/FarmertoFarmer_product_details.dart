@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_app/Agro/model/farmertofarmer_product_model.dart';
+import 'package:new_app/Theme/theme.dart';
 
-import '../../model/agro_produ_model.dart';
 
 class FarmertoFarmer_ProductDetailsPage extends StatelessWidget {
   final FarmertoFarmerProduct product;
@@ -14,7 +14,7 @@ class FarmertoFarmer_ProductDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(product.productName),
-        backgroundColor: Colors.green, // Adjust color if needed
+        backgroundColor: AppColors.lightgreen, // Adjust color if needed
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -24,7 +24,7 @@ class FarmertoFarmer_ProductDetailsPage extends StatelessWidget {
             Container(
               height: MediaQuery.of(context).size.height * 0.35,
               decoration: BoxDecoration(
-                color: Colors.green.shade200,
+                color: AppColors.lightgreen,
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(200),
                   bottomRight: Radius.circular(200),

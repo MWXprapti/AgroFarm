@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:new_app/theme/theme.dart';
 
 import '../../../Controllers/agro_product_controller.dart';
 import 'agro_product_details.dart';
@@ -35,7 +37,17 @@ class _ProductListingState extends State<ProductListing> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Agro Products")),
+      backgroundColor: AppColors.bgcolor,
+      appBar: AppBar(
+        title: const Text("Agro Products"),
+        backgroundColor: AppColors.lightgreen,
+        titleTextStyle: GoogleFonts.poppins(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
       body: Padding(
         padding:
         EdgeInsets.symmetric(horizontal: screenWidth * 0.03, vertical: 10),
@@ -53,7 +65,7 @@ class _ProductListingState extends State<ProductListing> {
                     padding:
                     EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: TextField(
@@ -75,13 +87,13 @@ class _ProductListingState extends State<ProductListing> {
                     padding:
                     EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: DropdownButton<String>(
                       value: selectedLocation,
-                      icon: const Icon(Icons.arrow_drop_down,
-                          color: Colors.black),
+                      icon:
+                      const Icon(Icons.arrow_drop_down, color: Colors.black),
                       underline: const SizedBox(),
                       isExpanded: true,
                       onChanged: (String? newValue) {
@@ -127,12 +139,14 @@ class _ProductListingState extends State<ProductListing> {
                   itemBuilder: (context, index) {
                     final product = controller.productList[index];
                     return GestureDetector(
-                      onTap: () => Get.to(() => ProductDetailsPage(product: product)),
+                      onTap: () =>
+                          Get.to(() => ProductDetailsPage(product: product)),
                       child: Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
                         elevation: 4,
+                        color: Colors.white,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -150,9 +164,10 @@ class _ProductListingState extends State<ProductListing> {
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 product.name,
-                                style: TextStyle(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.bold,
                                   fontSize: screenWidth * 0.04,
+                                  color: AppColors.textColor,
                                 ),
                               ),
                             ),
@@ -161,7 +176,7 @@ class _ProductListingState extends State<ProductListing> {
                                   horizontal: 8.0, vertical: 2),
                               child: Text(
                                 product.description,
-                                style: TextStyle(
+                                style: GoogleFonts.poppins(
                                   color: Colors.grey.shade600,
                                   fontSize: screenWidth * 0.035,
                                 ),

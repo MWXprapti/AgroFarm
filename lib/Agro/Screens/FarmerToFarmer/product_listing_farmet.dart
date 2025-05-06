@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:new_app/Agro/Screens/FarmerToFarmer/FarmertoFarmer_product_details.dart';
 import 'package:new_app/Controllers/farmertofarmer_product_controller.dart';
+import 'package:new_app/theme/theme.dart';
 
 
 class FarmertoFarmerProductListing extends StatefulWidget {
@@ -35,7 +36,8 @@ class _FarmertoFarmerProductListingState extends State<FarmertoFarmerProductList
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Farmer Products")),
+      backgroundColor: AppColors.bgcolor,
+      appBar: AppBar(title: const Text("Farmer Products"),backgroundColor: AppColors.lightgreen),
       body: Padding(
         padding:
         EdgeInsets.symmetric(horizontal: screenWidth * 0.03, vertical: 10),

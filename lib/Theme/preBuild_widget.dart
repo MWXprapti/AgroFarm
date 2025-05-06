@@ -34,87 +34,109 @@ Widget buildDropdown(
     String label,
     List<String> items,
     IconData icon, {
-      void Function(String)? onChanged, // <-- Add this optional parameter
+      void Function(String)? onChanged,
     }) {
-  return GestureDetector(
-    onTap: () {
-      Get.bottomSheet(
-        Container(
-          padding: EdgeInsets.all(16),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        label,
+        style: GoogleFonts.poppins(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: Colors.grey.shade700,
+        ),
+      ),
+      const SizedBox(height: 6),
+      GestureDetector(
+        onTap: () {
+          Get.bottomSheet(
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: ListView(
+                      children: items.map((item) {
+                        return ListTile(
+                          title: Text(item),
+                          onTap: () {
+                            selectedValue.value = item;
+                            if (onChanged != null) {
+                              onChanged(item);
+                            }
+                            Get.back();
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: Colors.grey.shade400,
+              width: 1.2,
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: GoogleFonts.poppins(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-              SizedBox(height: 8),
-              Expanded(
-                child: ListView(
-                  children: items.map((item) {
-                    return ListTile(
-                      title: Text(item),
-                      onTap: () {
-                        selectedValue.value = item;
-                        if (onChanged != null) {
-                          onChanged(item); // <-- Trigger the callback
-                        }
-                        Get.back(); // Close the bottom sheet
-                      },
-                    );
-                  }).toList(),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    },
-    child: Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Obx(() {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Icon(icon, color: AppColors.lightgreen),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(
-                    selectedValue.value,
-                    style: GoogleFonts.poppins(
-                        color: Colors.black, fontSize: 16),
-                    overflow: TextOverflow.ellipsis,
+          child: Obx(() {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5, right: 10),
+                    child: Icon(icon, color: Colors.green.shade600),
                   ),
-                ),
+                  Expanded(
+                    child: Text(
+                      selectedValue.value.isEmpty
+                          ? "Select $label"
+                          : selectedValue.value,
+                      style: GoogleFonts.poppins(
+                        color: selectedValue.value.isEmpty
+                            ? Colors.grey
+                            : Colors.black,
+                        fontSize: 16,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const Icon(Icons.arrow_drop_down, color: Colors.grey),
+                ],
               ),
-            ],
-          ),
-        );
-      }),
-    ),
+            );
+          }),
+        ),
+      ),
+    ],
   );
 }
-
 Widget buildSubmitButton(String text, VoidCallback onPressed) {
   return Container(
     width: double.infinity,

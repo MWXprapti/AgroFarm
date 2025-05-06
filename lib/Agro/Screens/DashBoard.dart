@@ -39,7 +39,7 @@ class _DashBoardState extends State<DashBoard> {
     HomePage(),
     Farm_Dashboard(),
     ProductListing(),
-    //SalesListPage(),
+    SalesListPage(),
     SettingsPage()
   ];
 
@@ -115,10 +115,10 @@ class _DashBoardState extends State<DashBoard> {
               selectedColor: Colors.amberAccent,
             ),
 
-            // DotNavigationBarItem(
-            //   icon: Icon(CupertinoIcons.list_bullet),
-            //   selectedColor: Colors.amberAccent,
-            // ),
+            DotNavigationBarItem(
+              icon: Icon(CupertinoIcons.list_bullet),
+              selectedColor: Colors.amberAccent,
+            ),
             DotNavigationBarItem(
               icon: Icon(Icons.settings_outlined),
               selectedColor: Colors.amberAccent,

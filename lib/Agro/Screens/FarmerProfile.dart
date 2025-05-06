@@ -126,9 +126,9 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                             radius: 50,
                             backgroundImage: NetworkImage(controller_.profileImage.value),
                             // backgroundImage: isImageValid ? NetworkImage("https://admin.multiwebx.com/farmerAPI/uploads/userProfile/1744026182.png") : null,
-                            child: !isImageValid
-                                ? Icon(Icons.person, size: 50, color: Colors.grey)
-                                : null,
+                            // child: !isImageValid
+                            //     ? Icon(Icons.person, size: 50, color: Colors.grey)
+                            //     : null,
                           );
                         }),
                       ),

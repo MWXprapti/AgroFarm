@@ -65,7 +65,7 @@ class _Farm_DashboardState extends State<Farm_Dashboard> {
 
   Widget _buildTopSection(double h, double w) {
     return Container(
-      height: h * 0.28,
+      height: h * 0.20,
       width: w,
       decoration: BoxDecoration(
         color: AppColors.lightgreen,
@@ -96,7 +96,7 @@ class _Farm_DashboardState extends State<Farm_Dashboard> {
 
   Widget _buildStatisticsCard(double h, double w) {
     return Positioned(
-      top: h * 0.20,
+      top: h * 0.13,
       left: w * 0.05,
       right: w * 0.05,
       child: Container(
@@ -166,7 +166,7 @@ class _Farm_DashboardState extends State<Farm_Dashboard> {
 
   Widget _buildProductGridView(double h, double w) {
     return Positioned(
-      top: h * 0.45,
+      top: h * 0.40,
       left: w * 0.05,
       right: w * 0.05,
       bottom: 0,

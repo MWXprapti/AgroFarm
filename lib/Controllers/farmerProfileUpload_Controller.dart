@@ -31,6 +31,42 @@ class FarmerProfileUploadController extends GetxController {
     profileImage.value = null;
   }
 
+  bool _validateFields({
+    required String name_,
+    required String city_,
+    required String state_,
+    required String address_,
+    required String pincode_,
+    required String cropName_,
+    required String landSize_,
+    required String referredBy_,
+    required String agentName_,
+  }) {
+    if (name_.isEmpty ||
+        city_.isEmpty ||
+        state_.isEmpty ||
+        address_.isEmpty ||
+        pincode_.isEmpty ||
+        cropName_.isEmpty ||
+        landSize_.isEmpty ||
+        referredBy_.isEmpty) {
+      Get.snackbar("Validation Error", "All fields are required");
+      return false;
+    }
+
+    if (pincode_.length != 6 || int.tryParse(pincode_) == null) {
+      Get.snackbar("Validation Error", "Pincode must be a 6-digit number");
+      return false;
+    }
+
+    if (referredBy_ == "Agent" && agentName_.isEmpty) {
+      Get.snackbar("Validation Error", "Agent name is required when referred by an Agent");
+      return false;
+    }
+
+    return true;
+  }
+
   Future<void> submitForm({
     required String name_,
     required String city_,
@@ -42,6 +78,18 @@ class FarmerProfileUploadController extends GetxController {
     required String referredBy_,
     String agentName_ = '',
   }) async {
+    if (!_validateFields(
+      name_: name_,
+      city_: city_,
+      state_: state_,
+      address_: address_,
+      pincode_: pincode_,
+      cropName_: cropName_,
+      landSize_: landSize_,
+      referredBy_: referredBy_,
+      agentName_: agentName_,
+    )) return;
+
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString("auth_token");
