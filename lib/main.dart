@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:new_app/Agro/Screens/ConsultantForm.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:new_app/generated/l10n.dart';
+import 'l10n/l10n.dart';
 // Screens
 import 'package:new_app/Agro/Screens/DashBoard.dart';
 import 'package:new_app/Agro/Screens/FarmerToFarmer/Dash_Farmer.dart';
@@ -70,11 +72,15 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/dashboard_farmer", page: () => Farm_Dashboard()),
 
       ],
+
+      supportedLocales: L10n.all,
+      locale: const Locale('en'),
+      localizationsDelegates: const [
+        AppLocalizationDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate
+      ],
     );
   }
-}
-
-// Function to switch language
-void toggleLanguage(String langCode) {
-  Get.updateLocale(Locale(langCode));
 }

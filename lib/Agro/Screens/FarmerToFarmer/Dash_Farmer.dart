@@ -121,7 +121,7 @@ class _Farm_DashboardState extends State<Farm_Dashboard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildStatsCard("Total Products", Icons.inventory_2_rounded, "${controller.productList.length}", w),
-            _buildStatsCard("Total Orders", Icons.shopping_cart_rounded, "10", w),
+            //_buildStatsCard("Total Orders", Icons.shopping_cart_rounded, "10", w),
           ],
         ),
       ),
@@ -129,37 +129,36 @@ class _Farm_DashboardState extends State<Farm_Dashboard> {
   }
 
   Widget _buildStatsCard(String title, IconData icon, String value, double w) {
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: w * 0.02),
-        padding: EdgeInsets.all(w * 0.04),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(w * 0.05),
-          color: Colors.white.withOpacity(0.2),
-          border: Border.all(color: Colors.white.withOpacity(0.3), width: 1),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: w * 0.12, color: Colors.white),
-            SizedBox(height: w * 0.02),
-            Text(title.tr,
-              style: GoogleFonts.poppins(
-                fontSize: w * 0.035,
-                fontWeight: FontWeight.w500,
-                color: Colors.white70,
-              ),
+    return Container(
+      width: 200,
+      margin: EdgeInsets.symmetric(horizontal: w * 0.16),
+      padding: EdgeInsets.all(w * 0.04),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(w * 0.05),
+        color: Colors.white.withOpacity(0.2),
+        border: Border.all(color: Colors.white.withOpacity(0.3), width: 1),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: w * 0.12, color: Colors.white),
+          SizedBox(height: w * 0.02),
+          Text(title.tr,
+            style: GoogleFonts.poppins(
+              fontSize: w * 0.035,
+              fontWeight: FontWeight.w500,
+              color: Colors.white70,
             ),
-            SizedBox(height: w * 0.01),
-            Text(value,
-              style: GoogleFonts.poppins(
-                fontSize: w * 0.07,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+          ),
+          SizedBox(height: w * 0.01),
+          Text(value,
+            style: GoogleFonts.poppins(
+              fontSize: w * 0.07,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -23,17 +23,20 @@ class GenerateOtpController extends GetxController {
     dio.Response? response;
 
     try {
-      // API call
-      response = await _dio.post(
+      response = await _dio
+          .post(
         "https://admin.multiwebx.com/farmerAPI/sendOTPJWTToken/",
         options: Options(
           headers: {"Content-Type": "application/x-www-form-urlencoded"},
+          sendTimeout: const Duration(seconds: 10),
+          receiveTimeout: const Duration(seconds: 15),
         ),
         data: {
           "action": "sendOtp",
           "mobile": "+91$phone",
         },
-      );
+      )
+          .timeout(const Duration(seconds: 20)); // <- Prevents hanging
     } on DioError catch (dioErr) {
       if (kDebugMode) print("DioError: $dioErr");
 
@@ -59,35 +62,40 @@ class GenerateOtpController extends GetxController {
       return;
     }
 
-    // Handle the API response
+    // Handle the response safely
     try {
-      if (response != null &&
-          response.statusCode == 200 &&
-          response.data["status"] == "success") {
-        String? token = response.data["token"];
+      if (response != null && response.statusCode == 200) {
+        final data = response.data;
+        if (data is Map && data["status"] == "success") {
+          String? token = data["token"];
+          if (token == null || token.isEmpty) {
+            Get.snackbar("Error", "Token missing in response");
+            return;
+          }
 
-        if (token == null || token.isEmpty) {
-          Get.snackbar("Error", "Token missing in response");
-          return;
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString("auth_token", token);
+          await prefs.setString("mobile_number", phone);
+
+          Get.snackbar(
+            "Success",
+            data["message"] ?? "OTP sent successfully",
+            duration: const Duration(seconds: 2),
+          );
+
+          Get.toNamed("/otp_verify", arguments: {"mobile": phone});
+        } else {
+          Get.snackbar("Error", data["message"] ?? "Failed to generate OTP");
         }
-
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString("auth_token", token);
-        await prefs.setString("mobile_number", phone);
-
-        Get.snackbar(
-          "Success",
-          response.data["message"] ?? "OTP sent successfully",
-          duration: const Duration(seconds: 2),
-        );
-
-        Get.toNamed("/otp_verify", arguments: {"mobile": phone});
       } else {
-        Get.snackbar("Error", response.data["message"] ?? "Failed to generate OTP");
+        Get.snackbar("Error", "Invalid response from server");
       }
     } catch (e) {
-      if (kDebugMode) print("❌ Error in OTP Generation: $e");
-      Get.snackbar("Error", "Something went wrong while processing the response");
+      if (kDebugMode) print("❌ Error parsing response: $e");
+      // Only show snackbar if OTP wasn't already shown
+      if (response?.data is Map && response?.data["status"] != "success") {
+        Get.snackbar("Error", "Something went wrong while processing the response");
+      }
     } finally {
       isLoading.value = false;
     }

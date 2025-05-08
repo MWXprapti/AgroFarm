@@ -50,11 +50,15 @@ class _DashBoardState extends State<DashBoard> {
         backgroundColor: Colors.grey[200],
         extendBody: true,
 
-          appBar: AppBar(
-            title: Text("Hello, ${controller_.name.value}", style: TextStyle(color: AppColors.bgcolor, fontSize: 30)),
-            backgroundColor: AppColors.lightgreen,
-            shadowColor: Colors.transparent,
-          ),
+        appBar: AppBar(
+          title: Obx(() => Text(
+            "Hello, ${controller_.name.value}",
+            style: TextStyle(color: AppColors.bgcolor, fontSize: 30),
+          )),
+          backgroundColor: AppColors.lightgreen,
+          shadowColor: Colors.transparent,
+        ),
+
         // bottomNavigationBar: FlashyTabBar(
         //   backgroundColor: AppColors.bgcolor,
         //   selectedIndex: _selectedIndex,

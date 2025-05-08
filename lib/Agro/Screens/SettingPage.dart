@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:new_app/Theme/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -62,7 +64,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       onTap: () => Get.toNamed("/LocationPage"),
                     ),
                     _buildSettingOption(
-                      icon: Icons.logout_outlined,
+                      icon: Icons.video_library_outlined,
                       title: "Reels",
                       subtitle: "You can watch short videos",
                       onTap: () => Get.toNamed("/reels"),
@@ -71,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       icon: Icons.logout_outlined,
                       title: "Logout",
                       subtitle: "You can logout",
-                      onTap: () => Get.toNamed("/logout"),
+                      onTap: logoutUser,
                     ),
                   ],
                 ),
@@ -148,6 +150,61 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         );
       },
+    );
+  }
+
+  /// 🔒 Logout function
+  void logoutUser() {
+    Get.defaultDialog(
+      title: "",
+      radius: 16,
+      contentPadding: EdgeInsets.zero,
+      content: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 10),
+            Text(
+              "Confirm Logout",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Text(
+              "Are you sure you want to logout?",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.lightgreen,
+                  ),
+                  onPressed: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.clear();
+                    Get.offAllNamed("/signin");
+                    Get.back();
+                    Get.snackbar("Logout", "You have been logged out successfully");
+                  },
+                  child: Text("Yes", style: TextStyle(color: Colors.white)),
+                ),
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: AppColors.lightgreen),
+                  ),
+                  onPressed: () => Get.back(),
+                  child: Text("No", style: TextStyle(color: AppColors.lightgreen)),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+          ],
+        ),
+      ),
     );
   }
 }

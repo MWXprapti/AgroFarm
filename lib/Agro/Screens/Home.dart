@@ -34,6 +34,10 @@ class _HomePageState extends State<HomePage> {
     controller_.fetchFarmerDetails();
 
   }
+
+  List<String> cities = ['All','Ahmedabad', 'Rajkot', 'Junagadh', 'Jamnagar', 'Surat'];
+  String selectedCity = 'All';
+
   final List<String> offers = [
     'assets/agri1.jpg',
     'assets/agri2.jpg',
@@ -98,35 +102,51 @@ class _HomePageState extends State<HomePage> {
               ),
               child: Row(
                 children: [
-                  //location
-                  // Container(
-                  //   height: MediaQuery.of(context).size.height*0.07,
-                  //   decoration: BoxDecoration(
-                  //     color: Colors.white,
-                  //     borderRadius: BorderRadius.circular(15),
-                  //     boxShadow: [
-                  //       BoxShadow(
-                  //         color: Colors.black26,
-                  //         blurRadius: 8,
-                  //         offset: Offset(4, 4),
-                  //       ),
-                  //     ],
-                  //   ),
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.only(left: 8.0,right: 8,top: 13,bottom: 13),
-                      // child: Row(
-                      //   children: [
-                      //     Icon(Icons.location_on_outlined,color: Colors.red,),
-                      //     Text("Location",)
-                      //   ],
-                      // ),
-                    // ),
-                  // ),
-                  SizedBox(width: 5,),
-                  // Search Bar Container
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.07,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 8,
+                          offset: Offset(4, 4),
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0, right: 8, top: 13, bottom: 13),
+                      child: Row(
+                        children: [
+                          Icon(Icons.location_on_outlined, color: Colors.red),
+                          SizedBox(width: 5),
+                          DropdownButton<String>(
+                            value: selectedCity,
+                            underline: SizedBox(),
+                            dropdownColor: Colors.white,
+                            icon: Icon(Icons.keyboard_arrow_down, color: Colors.black),
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedCity = newValue!;
+                              });
+                            },
+                            items: cities.map<DropdownMenuItem<String>>((String city) {
+                              return DropdownMenuItem<String>(
+                                value: city,
+                                child: Text(city),
+                              );
+                            }).toList(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 5),
                   Expanded(
                     child: Container(
-                      height: MediaQuery.of(context).size.height*0.07,
+                      height: MediaQuery.of(context).size.height * 0.07,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
@@ -141,6 +161,14 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       child: Center(
                         child: TextFormField(
+                          onFieldSubmitted: (value) {
+                            if (value.trim().isNotEmpty) {
+                              Get.toNamed('/list', arguments: {
+                                'searchQuery': value.trim(),
+                                'selectedCity': selectedCity,
+                              });
+                            }
+                          },
                           decoration: InputDecoration(
                             labelText: "Search",
                             labelStyle: TextStyle(color: Colors.grey),
@@ -153,28 +181,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-
-                  //SizedBox(width: 12), // Space between search field & button
-                  // IconButton Outside the Search Bar
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     color: Colors.white,
-                  //     shape: BoxShape.circle,
-                  //     boxShadow: [
-                  //       BoxShadow(
-                  //         color: Colors.black26,
-                  //         blurRadius: 8,
-                  //         offset: Offset(4, 4),
-                  //       ),
-                  //     ],
-                  //   ),
-                  //   child: IconButton(
-                  //     icon: Icon(Icons.mic, color: AppColors.lightgreen),
-                  //     onPressed: () {
-                  //       // Implement voice search or any other action
-                  //     },
-                  //   ),
-                  // ),
                 ],
               ),
             ),
