@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   final AgroProductController agroController = Get.put(AgroProductController());
-  final FarmertoFarmerProductController farmerController = Get.put(FarmertoFarmerProductController());
+  final FarmertoFarmer_ProductController farmerController = Get.put(FarmertoFarmer_ProductController());
   final FarmerProfileFetchController controller_ = Get.put(FarmerProfileFetchController());
 
   @override

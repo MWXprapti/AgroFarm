@@ -54,9 +54,13 @@ class _FarmerProfileFormState extends State<FarmerProfileForm> {
                       Icons.numbers,
                       (val) => controller.pincode.value = val,
                       TextInputType.phone),
+                  // SizedBox(height: 16),
+                  // _buildTextField("Crop Name", Icons.grass,
+                  //     (val) => controller.cropName.value = val),
                   SizedBox(height: 16),
-                  _buildTextField("Crop Name", Icons.grass,
-                      (val) => controller.cropName.value = val),
+                  _buildDropdown(
+                      ['wheat', 'rice', 'cotton', 'jute', 'sugarcane','Barley','Mustard'],
+                      controller.cropName, label: 'Crop Name'),
                   SizedBox(height: 16),
                   _buildDropdown(
                       ['1', '2', '3', '4', '5+'], controller.landSize, label: 'Land Acer'),
@@ -67,7 +71,7 @@ class _FarmerProfileFormState extends State<FarmerProfileForm> {
                         ? Column(
                             children: [
                               SizedBox(height: 16),
-                              _buildTextField("Referral Code", Icons.vpn_key,
+                              _buildTextField("Executive Name", Icons.vpn_key,
                                   (val) => controller.referralCode.value = val),
                             ],
                           )

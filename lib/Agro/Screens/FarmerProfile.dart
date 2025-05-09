@@ -123,7 +123,7 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
 
                           return CircleAvatar(
                             backgroundColor: Colors.grey.shade200,
-                            radius: 50,
+                            radius:80,
                             backgroundImage: NetworkImage(controller_.profileImage.value),
                             // backgroundImage: isImageValid ? NetworkImage("https://admin.multiwebx.com/farmerAPI/uploads/userProfile/1744026182.png") : null,
                             // child: !isImageValid
@@ -159,7 +159,7 @@ class _FarmerProfilePageState extends State<FarmerProfilePage> {
                           Obx(() => _buildInfoRow(LucideIcons.crop, "Crop Name", controller_.cropName.value, w)),
                           Obx(() => _buildInfoRow(LucideIcons.briefcase, "Land Size", controller_.landSize.value, w)),
                           Obx(() => _buildInfoRow(LucideIcons.user, "Referred By", controller_.referredBy.value, w)),
-                          Obx(() => _buildInfoRow(LucideIcons.user, "Agent Name/Referral Code", controller_.agentName.value, w)),
+                          Obx(() => _buildInfoRow(LucideIcons.user, "Executive Name", controller_.agentName.value, w)),
                         ],
                       ),
                     ),
